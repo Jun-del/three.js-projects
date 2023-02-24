@@ -10,5 +10,10 @@
   },
   "devDependencies": {
     "vite": "^4.1.0"
+  },
+  "dependencies": {
+    "gsap": "^3.11.4",
+    "lil-gui": "^0.18.0",
+    "three": "^0.150.0"
   }
 }
