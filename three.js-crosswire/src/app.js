@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import * as dat from "lil-gui";
 
 /**
@@ -18,59 +19,67 @@ const scene = new THREE.Scene();
 /**
  * Lights
  */
-// Ambient light
-const ambientLight = new THREE.AmbientLight();
-ambientLight.color = new THREE.Color(0xffffff);
-ambientLight.intensity = 0.5;
-scene.add(ambientLight);
-
-// Directional light
-const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3);
-directionalLight.position.set(1, 0.25, 0);
-scene.add(directionalLight);
-
-// Hemisphere light
-const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.3);
-scene.add(hemisphereLight);
-
-// Point light
-const pointLight = new THREE.PointLight(0xff9000, 0.5, 10, 2);
-pointLight.position.set(1, -0.5, 1);
-scene.add(pointLight);
-
-// Rect area light
-const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 2, 1, 1);
-rectAreaLight.position.set(-1.5, 0, 1.5);
-rectAreaLight.lookAt(new THREE.Vector3());
-scene.add(rectAreaLight);
-
-// Spot light
-const spotLight = new THREE.SpotLight(0x78ff00, 0.5, 10, Math.PI * 0.1, 0.25, 1);
-spotLight.position.set(0, 2, 3);
-scene.add(spotLight);
-
-spotLight.target.position.x = -0.75;
-scene.add(spotLight.target);
 
 /**
  * Objects
  */
 // Material
-const material = new THREE.MeshStandardMaterial();
+const material = new THREE.MeshNormalMaterial();
 
 // Objects
-const cube = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 0.75), material);
+// const cube = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 0.75), material);
 
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(5, 5), material);
-plane.rotation.x = -Math.PI * 0.5;
-plane.position.y = -0.65;
+// const plane = new THREE.Mesh(new THREE.PlaneGeometry(5, 5), material);
+// plane.rotation.x = -Math.PI * 0.5;
+// plane.position.y = -0.65;
 
-scene.add(cube, plane);
+// scene.add(cube, plane);
 
 /**
  * Models
  */
+
+let Object3D = new THREE.Object3D();
+
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("/draco/");
+
 const gltfLoader = new GLTFLoader();
+gltfLoader.setDRACOLoader(dracoLoader);
+
+async function loadModel() {
+  const squareModel = await gltfLoader.loadAsync("/models/ob1.glb");
+  const sectorModel = await gltfLoader.loadAsync("/models/ob2.glb");
+  const arcModel = await gltfLoader.loadAsync("/models/ob3.glb");
+
+  const squareGeometry = squareModel.scene.children[0].geometry;
+  const sectorGeometry = sectorModel.scene.children[0].geometry;
+  const arcGeometry = arcModel.scene.children[0].geometry;
+
+  const ROW = 10;
+  const COL = 10;
+  const count = ROW * COL;
+
+  const instancedSquare = new THREE.InstancedMesh(squareGeometry, material, count);
+
+  scene.add(instancedSquare);
+
+  let index = 0;
+  for (let i = 0; i < ROW; i++) {
+    for (let j = 0; j < COL; j++) {
+      let x = (i / ROW) * 2 - 1;
+      let y = (j / COL) * 2 - 1;
+
+      Object3D.position.set(i - ROW / 2, 0, j - COL / 2);
+      Object3D.updateMatrix();
+      instancedSquare.setMatrixAt(index++, Object3D.matrix);
+      //   instancedSquare.setMatrixAt(i * ROW + j, Object3D.matrix);
+    }
+  }
+
+  instancedSquare.instanceMatrix.needsUpdate = true;
+}
+loadModel();
 
 /**
  * Sizes
@@ -126,8 +135,8 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
   // Update objects
-  cube.rotation.y = 0.1 * elapsedTime;
-  cube.rotation.x = 0.15 * elapsedTime;
+  //   cube.rotation.y = 0.1 * elapsedTime;
+  //   cube.rotation.x = 0.15 * elapsedTime;
 
   // Update controls
   controls.update();
