@@ -34,7 +34,8 @@ void main(){
     
     float dist = distance(vWorldPosition, origin);
     float radialMove = fract(dist - time);
-    // radialMove *= 1. - smoothstep(1., 3., dist);
+    // Fade out the effect
+    radialMove *= 1. - smoothstep(1., 3., dist); 
     radialMove *= 1. - step(time, dist);
 
     float scanMix = smoothstep(0.3, 0., 1. - radialMove);
@@ -42,7 +43,7 @@ void main(){
 
     scanMix += smoothstep(0.1, 0., 1. - radialMove) * 1.5;
 
-    vec3 scanColor = mix(vec3(1.), vec3(0.5, 0.5, 1), scanMix * 0.2);
+    vec3 scanColor = mix(vec3(1.), vec3(0.5, 0.5, 1), scanMix * 0.5);
 
 
     gl_FragColor = vec4(vUv, 0.0, 1.0);

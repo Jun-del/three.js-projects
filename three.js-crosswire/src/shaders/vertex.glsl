@@ -1,4 +1,5 @@
 uniform float time;
+
 varying vec2 vUv;
 varying vec2 pixels;
 varying vec3 vPosition;
@@ -7,13 +8,14 @@ varying vec3 vViewPosition;
 varying vec3 vWorldPosition;
 
 attribute float aRandom;
+
 float PI = 3.1415926535897932384626433832795;
 
 void main() {
     vUv = uv;
 
     float offset = aRandom + sin(time + 15.*aRandom);
-    offset *= 0.2;
+    offset = 0.;
  
     vec4 mvPosition = modelMatrix * instanceMatrix * vec4(position, 1.0);
     mvPosition.y += offset;
