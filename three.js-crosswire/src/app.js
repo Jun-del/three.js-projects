@@ -68,7 +68,8 @@ async function addObject() {
     side: THREE.DoubleSide,
     uniforms: {
       time: { value: 0 },
-      uMatcap: { value: new THREE.TextureLoader().load("/textures/sec1.png") },
+      uMatcap: { value: new THREE.TextureLoader().load("/textures/sec3.png") },
+      uScan: { value: new THREE.TextureLoader().load("/textures/scan.png") },
       resolution: { value: new THREE.Vector4() },
     },
     vertexShader: vertex,
@@ -155,7 +156,7 @@ let time = 0;
 // scene.add(camera);
 
 // Orthographic Camera
-const frustumSize = 5;
+const frustumSize = 4;
 const orthoCamera = new THREE.OrthographicCamera(
   (frustumSize * sizes.aspectRatio) / -2,
   (frustumSize * sizes.aspectRatio) / 2,
@@ -200,7 +201,7 @@ const tick = () => {
   //   cube.rotation.x = 0.15 * elapsedTime;
 
   // Update material uniforms
-  shaderMaterial.uniforms.time.value = elapsedTime;
+  shaderMaterial.uniforms.time.value = elapsedTime * 0.7;
 
   // Update controls
   controls.update();
