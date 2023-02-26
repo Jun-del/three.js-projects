@@ -12,7 +12,7 @@ import * as dat from "lil-gui";
  * Base
  */
 // Debug
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -56,12 +56,12 @@ let shaderMaterial = new THREE.ShaderMaterial({
 addObject();
 async function addObject() {
   const squareModel = await gltfLoader.loadAsync("/models/ob1.glb");
-  const sectorModel = await gltfLoader.loadAsync("/models/ob2.glb");
-  const arcModel = await gltfLoader.loadAsync("/models/ob3.glb");
+  // const sectorModel = await gltfLoader.loadAsync("/models/ob2.glb");
+  // const arcModel = await gltfLoader.loadAsync("/models/ob3.glb");
 
   const squareGeometry = squareModel.scene.children[0].geometry;
-  const sectorGeometry = sectorModel.scene.children[0].geometry;
-  const arcGeometry = arcModel.scene.children[0].geometry;
+  // const sectorGeometry = sectorModel.scene.children[0].geometry;
+  // const arcGeometry = arcModel.scene.children[0].geometry;
 
   const ROW = 25;
   const COL = 25;
@@ -199,12 +199,12 @@ const tick = () => {
 tick();
 
 // Debug
-const cameraFolder = gui.addFolder("Camera");
-cameraFolder.add(camera.position, "x").min(-30).max(30).step(1);
-cameraFolder.add(camera.position, "y").min(-30).max(30).step(1);
-cameraFolder.add(camera.position, "z").min(-30).max(30).step(1);
-cameraFolder.open();
-const settings = {
-  progress: 0,
-};
-gui.add(settings, "progress").min(0).max(1).step(0.01);
+// const cameraFolder = gui.addFolder("Camera");
+// cameraFolder.add(camera.position, "x").min(-30).max(30).step(1);
+// cameraFolder.add(camera.position, "y").min(-30).max(30).step(1);
+// cameraFolder.add(camera.position, "z").min(-30).max(30).step(1);
+// cameraFolder.open();
+// const settings = {
+//   progress: 0,
+// };
+// gui.add(settings, "progress").min(0).max(1).step(0.01);
