@@ -35,7 +35,7 @@ void main(){
     float dist = distance(vWorldPosition, origin);
     float radialMove = fract(dist - time);
     // Fade out the effect
-    radialMove *= 1. - smoothstep(1., 3., dist); 
+    // radialMove *= 1. - smoothstep(1., 3., dist); 
     radialMove *= 1. - step(time, dist);
 
     float scanMix = smoothstep(0.3, 0., 1. - radialMove);

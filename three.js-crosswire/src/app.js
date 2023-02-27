@@ -6,7 +6,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { SSRPass } from "three/examples/jsm/postprocessing/SSRPass.js";
 import fragment from "./shaders/fragment.glsl";
 import vertex from "./shaders/vertex.glsl";
-import * as dat from "lil-gui";
+// import * as dat from "lil-gui";
 
 /**
  * Base
