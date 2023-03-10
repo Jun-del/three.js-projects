@@ -121,23 +121,23 @@ window.addEventListener("resize", () => {
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(25, sizes.width / sizes.height, 1, 100);
+// const camera = new THREE.PerspectiveCamera(25, sizes.width / sizes.height, 1, 100);
 // camera.position.set(0, 1, 5);
-camera.position.set(8, 12, 16);
+// camera.position.set(8, 12, 16);
 
 // Orthographic Camera
-const frustumSize = 4;
-// const camera = new THREE.OrthographicCamera(
-//   (frustumSize * sizes.aspectRatio) / -2,
-//   (frustumSize * sizes.aspectRatio) / 2,
-//   frustumSize / 2,
-//   frustumSize / -2,
-//   -1000,
-//   1000
-// );
+const frustumSize = 8;
+const camera = new THREE.OrthographicCamera(
+  (frustumSize * sizes.aspectRatio) / -2,
+  (frustumSize * sizes.aspectRatio) / 2,
+  frustumSize / 2,
+  frustumSize / -2,
+  -1000,
+  1000
+);
 camera.position.set(8, 12, 16);
 // camera.position.set(0, 10, 0);
-// camera.lookAt(0, 0, 0);
+camera.lookAt(0, 0, 0);
 scene.add(camera);
 
 // Controls
@@ -188,9 +188,10 @@ const tick = () => {
   controls.update();
 
   // Render
-  // renderer.render(scene, camera);
+  renderer.render(scene, camera);
 
-  composer.render();
+  // Render SSR
+  // composer.render();
 
   // Call tick again on the next frame
   window.requestAnimationFrame(tick);
