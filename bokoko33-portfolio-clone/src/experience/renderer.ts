@@ -41,15 +41,6 @@ export default class Renderer {
   }
 
   update() {
-    // /**
-    //  * Animate
-    //  */
-    // function animate() {
-    //   requestAnimationFrame(animate);
-    //   renderer.render(scene, camera);
-    // }
-    // animate();
-
     this.renderer.render(this.scene, this.camera.perspectiveCamera);
   }
 }
