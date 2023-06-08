@@ -10,9 +10,9 @@ export default class Camera {
   public sizes: Sizes;
   public scene: THREE.Scene;
   public canvas: HTMLCanvasElement;
-  public frustum: number;
-  public perspectiveCamera: THREE.PerspectiveCamera;
-  public OrthographicCamera: THREE.OrthographicCamera;
+  public frustum!: number;
+  public perspectiveCamera!: THREE.PerspectiveCamera;
+  public OrthographicCamera!: THREE.OrthographicCamera;
   public controls: OrbitControls;
 
   constructor() {
@@ -63,7 +63,7 @@ export default class Camera {
 
   setOrbitControls() {
     this.controls = new OrbitControls(this.perspectiveCamera, this.canvas);
-    this.controls.damping = true;
+    this.controls.enableDamping = true;
     this.controls.enableZoom = true;
   }
 

@@ -14,13 +14,13 @@ export default class Experience {
   public static _instance: Experience;
 
   // TODO: optional
-  public sizes: Sizes;
-  public scene: THREE.Scene;
-  public camera: Camera;
-  public renderer: Renderer;
-  public time: Time;
-  public world: World;
-  public resources: Resources;
+  public sizes!: Sizes;
+  public scene!: THREE.Scene;
+  public camera!: Camera;
+  public renderer!: Renderer;
+  public time!: Time;
+  public world!: World;
+  public resources!: Resources;
 
   constructor(public canvas: HTMLCanvasElement) {
     if (Experience._instance) {

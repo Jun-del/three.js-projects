@@ -1,13 +1,16 @@
 import * as THREE from "three";
 
 import Experience from "./experience";
+import Sizes from "./utils/sizes";
+import Camera from "./camera";
 
 export default class Renderer {
   public experience: Experience;
   public sizes: Sizes;
   public scene: THREE.Scene;
   public canvas: HTMLCanvasElement;
-  public renderer: THREE.WebGLRenderer;
+  public renderer!: THREE.WebGLRenderer;
+  public camera: Camera;
 
   constructor() {
     this.experience = new Experience();
@@ -27,6 +30,7 @@ export default class Renderer {
 
     this.renderer.useLegacyLights = false;
     this.renderer.toneMapping = THREE.CineonToneMapping;
+    // TODO: ToneMappingExposure value
     this.renderer.toneMappingExposure = 1.75;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
