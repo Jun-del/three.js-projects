@@ -15,6 +15,8 @@ export default class World {
   public scene: THREE.Scene;
   public canvas: HTMLCanvasElement;
   public camera: Camera;
+  public environment!: Environment;
+  public room!: Room;
 
   constructor() {
     this.experience = new Experience();
