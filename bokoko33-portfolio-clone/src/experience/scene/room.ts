@@ -1,13 +1,12 @@
 import * as THREE from "three";
 
 import Experience from "../experience";
-import Resources from "../utils/resources";
 import { AssetItem } from "../../types";
 
 export default class Room {
   public experience: Experience;
-  public scene: THREE.Scene;
-  public resources: Resources;
+  public scene: Experience["scene"];
+  public resources: Experience["resources"];
   public room: AssetItem;
   public roomScene: THREE.Object3D;
 

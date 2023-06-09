@@ -1,22 +1,18 @@
-import * as THREE from "three";
-
 import Experience from "../experience";
-import Camera from "../camera";
 import Room from "./room";
 import Environment from "./environment";
-
-import Resources from "../utils/resources";
-import Sizes from "../utils/sizes";
+import Controls from "./controls";
 
 export default class World {
   public experience: Experience;
-  public sizes: Sizes;
-  public resources: Resources;
-  public scene: THREE.Scene;
-  public canvas: HTMLCanvasElement;
-  public camera: Camera;
+  public sizes: Experience["sizes"];
+  public scene: Experience["scene"];
+  public canvas: Experience["canvas"];
+  public camera: Experience["camera"];
+  public resources: Experience["resources"];
   public environment!: Environment;
   public room!: Room;
+  public controls!: Controls;
 
   constructor() {
     this.experience = new Experience();
@@ -29,10 +25,19 @@ export default class World {
     this.resources.on("ready", () => {
       this.environment = new Environment();
       this.room = new Room();
+      this.controls = new Controls();
     });
   }
 
   resize() {}
 
-  update() {}
+  update() {
+    if (this.room) {
+      this.room.update();
+    }
+
+    if (this.controls) {
+      this.controls.update();
+    }
+  }
 }

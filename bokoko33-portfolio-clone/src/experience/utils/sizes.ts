@@ -5,9 +5,12 @@ export default class Sizes extends EventEmitter {
   public height: number;
   public aspectRatio: number;
   public pixelRatio: number;
+  public frustum: number;
 
   constructor() {
     super();
+
+    this.frustum = 5;
 
     this.width = window.innerWidth;
     this.height = window.innerHeight;

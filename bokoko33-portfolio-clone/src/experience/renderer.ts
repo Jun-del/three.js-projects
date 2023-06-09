@@ -1,16 +1,14 @@
 import * as THREE from "three";
 
 import Experience from "./experience";
-import Sizes from "./utils/sizes";
-import Camera from "./camera";
 
 export default class Renderer {
   public experience: Experience;
-  public sizes: Sizes;
-  public scene: THREE.Scene;
+  public sizes: Experience["sizes"];
+  public scene: Experience["scene"];
   public canvas: HTMLCanvasElement;
+  public camera: Experience["camera"];
   public renderer!: THREE.WebGLRenderer;
-  public camera: Camera;
 
   constructor() {
     this.experience = new Experience();
