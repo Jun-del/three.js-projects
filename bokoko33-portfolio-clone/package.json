@@ -12,6 +12,7 @@
     "@types/events": "^3.0.0",
     "@types/three": "^0.152.1",
     "events": "^3.3.0",
+    "gsap": "^3.12.1",
     "lil-gui": "^0.18.1",
     "three": "^0.153.0",
     "typescript": "^5.0.2",

@@ -25,9 +25,11 @@ export default class Environment {
     this.sunLight.shadow.camera.far = 20;
     this.sunLight.shadow.mapSize.set(1024, 1024);
     this.sunLight.shadow.normalBias = 0.05;
-    // this.sunLight.position.set(-1, 5, 10);
-    this.sunLight.position.set(-5.78, 5.28, -7.01);
-    this.sunLight.rotation.set(0, -2.34, 0);
+
+    this.sunLight.position.set(-1.5, 7, 3);
+
+    // this.sunLight.position.set(-5.78, 5.28, -7.01);
+    // this.sunLight.rotation.set(0, -2.34, 0);
 
     this.scene.add(this.sunLight);
 
@@ -37,10 +39,10 @@ export default class Environment {
     // const helper = new THREE.CameraHelper(this.sunLight.shadow.camera);
     // this.scene.add(helper);
 
-    const directionalLightHelper = new THREE.DirectionalLightHelper(
-      this.sunLight,
-      5
-    );
+    // const directionalLightHelper = new THREE.DirectionalLightHelper(
+    //   this.sunLight,
+    //   5
+    // );
     // this.scene.add(directionalLightHelper);
 
     /**
@@ -82,8 +84,8 @@ export default class Environment {
       .name("ambient-intensity");
     ambientFolder.addColor(this.ambientLight, "color").name("ambient-color");
 
-    lightFolder.open();
-    ambientFolder.open();
+    lightFolder.open(false);
+    ambientFolder.open(false);
   }
   // lightFolder.add(this.ambientLight, "intensity", 0, 1, 0.01);
 

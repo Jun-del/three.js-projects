@@ -12,6 +12,9 @@ export default class Resources extends EventEmitter {
   public items: { [key: string]: AssetItem } = {};
   public queue: number;
   public loaded: number;
+  public loaders!: {
+    [key: string]: GLTFLoader | DRACOLoader;
+  };
   public video: { [key: string]: HTMLVideoElement } = {};
   public videoTexture: { [key: string]: THREE.VideoTexture } = {};
 

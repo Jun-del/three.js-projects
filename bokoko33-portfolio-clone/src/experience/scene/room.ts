@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import GSAP from "gsap";
 
 import Experience from "../experience";
 import { AssetItem } from "../../types";
@@ -9,6 +10,12 @@ export default class Room {
   public resources: Experience["resources"];
   public room: AssetItem;
   public roomScene: THREE.Object3D;
+  public lerp: {
+    current: number;
+    target: number;
+    ease: number;
+  };
+  public rotation!: number;
 
   constructor() {
     this.experience = new Experience();
@@ -17,22 +24,17 @@ export default class Room {
     this.room = this.resources.items.room;
     this.roomScene = this.room.scene as THREE.Object3D;
 
+    this.lerp = {
+      current: 0,
+      target: 0,
+      ease: 0.1,
+    };
+
     this.setModel();
+    this.onMouseMove();
   }
 
   setModel() {
-    // this.roomScene.children.forEach((child: THREE.Object3D) => {
-    //   child.castShadow = true;
-    //   child.receiveShadow = true;
-
-    //   if (child instanceof THREE.Group) {
-    //     child.children.forEach((groupChild: THREE.Object3D) => {
-    //       groupChild.castShadow = true;
-    //       groupChild.receiveShadow = true;
-    //     });
-    //   }
-    // });
-
     this.roomScene.traverse((child: THREE.Object3D) => {
       if (child instanceof THREE.Mesh) {
         child.castShadow = true;
@@ -50,13 +52,13 @@ export default class Room {
 
       if (child.name === "MonitorScreen") {
         (child as THREE.Mesh).material = new THREE.MeshBasicMaterial({
-          map: this.resources.items.monitorScreen,
+          map: this.resources.items.monitorScreen as THREE.Texture,
         });
       }
 
       if (child.name === "LaptopScreen") {
         (child as THREE.Mesh).material = new THREE.MeshBasicMaterial({
-          map: this.resources.items.laptopScreen,
+          map: this.resources.items.laptopScreen as THREE.Texture,
         });
       }
     });
@@ -65,7 +67,24 @@ export default class Room {
     this.roomScene.scale.set(0.1, 0.1, 0.1);
   }
 
+  onMouseMove() {
+    window.addEventListener("mousemove", (event) => {
+      this.rotation =
+        ((event.clientX - window.innerWidth / 2) * 2) / window.innerWidth;
+
+      this.lerp.target = this.rotation * 0.08;
+    });
+  }
+
   resize() {}
 
-  update() {}
+  update() {
+    this.lerp.current = GSAP.utils.interpolate(
+      this.lerp.current,
+      this.lerp.target,
+      this.lerp.ease
+    );
+
+    this.roomScene.rotation.y = this.lerp.current;
+  }
 }
