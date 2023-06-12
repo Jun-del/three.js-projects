@@ -5,3 +5,5 @@ export interface Asset {
 }
 
 export type AssetItem = THREE.Object3D | THREE.Texture;
+
+export type Themes = "light" | "dark";

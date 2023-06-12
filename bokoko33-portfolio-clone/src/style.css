@@ -39,6 +39,59 @@ body {
   position: relative;
 }
 
+/* Toggle Bar Light-Dark Mode */
+.toggle-bar {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  top: 48px;
+  right: 48px;
+  z-index: 9999999;
+}
+
+.sun-wrapper,
+.moon-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggle-button {
+  cursor: pointer;
+  position: relative;
+  width: 56px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  border-radius: 999px;
+  margin: 0px 16px;
+  border: none;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.toggle-button:hover .toggle-circle {
+  transform: scale(0.9);
+}
+
+.toggle-circle {
+  position: absolute;
+  left: 6px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: var(--secondary-color);
+  transition: all 0.2s ease-in-out;
+}
+
+.slide {
+  left: 28px;
+}
+
 /* Section Format */
 .section-margin {
   height: 3000px;
@@ -83,6 +136,57 @@ body {
   line-height: 2;
   margin-top: 16px;
   font-size: 16px;
+}
+
+/* Fancy Decoration Part of the Section */
+.section-title {
+  position: relative;
+  color: var(--primary-color);
+}
+
+.section-title-text {
+  display: block;
+  font-size: 40px;
+  font-weight: 500;
+  transform-origin: left;
+  transform: skewY(25deg);
+  z-index: 5;
+  text-transform: uppercase;
+}
+
+.styleOne,
+.styleTwo,
+.styleThree {
+  position: absolute;
+  display: block;
+  width: 100%;
+  max-width: 278px;
+  height: 60px;
+  border: 1px solid var(--primary-color);
+  transform-origin: left;
+  transform: skewY(-25deg);
+}
+
+.styleOne {
+  top: 0px;
+}
+
+.styleTwo {
+  top: 80px;
+}
+
+.styleThree {
+  top: 80px;
+  transform: skewY(25deg);
+  background-color: var(--primary-color);
+}
+
+.section-number {
+  position: absolute;
+  bottom: 15px;
+  right: 0;
+  color: var(--primary-color);
+  font-size: 24px;
 }
 
 /* Hero */

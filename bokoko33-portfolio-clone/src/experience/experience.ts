@@ -8,6 +8,7 @@ import Resources from "./utils/resources";
 import Camera from "./camera";
 import Renderer from "./renderer";
 import World from "./scene/world";
+import Theme from "./theme";
 
 export default class Experience {
   // private static _instance: Experience;
@@ -19,10 +20,11 @@ export default class Experience {
   public camera!: Camera;
   public renderer!: Renderer;
   public time!: Time;
+  public theme!: Theme;
   public world!: World;
   public resources!: Resources;
 
-  constructor(public canvas: HTMLCanvasElement) {
+  constructor(public canvas?: HTMLCanvasElement) {
     if (Experience._instance) {
       return Experience._instance;
     }
@@ -39,6 +41,7 @@ export default class Experience {
     this.camera = new Camera();
     this.renderer = new Renderer();
     this.resources = new Resources(Assets);
+    this.theme = new Theme();
     this.world = new World();
 
     this.time.on("update", () => {

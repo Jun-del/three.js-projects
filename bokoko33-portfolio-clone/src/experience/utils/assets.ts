@@ -2,6 +2,7 @@ import { Asset } from "../../types";
 
 type Assets = Asset[];
 
+// TODO: Invert the monitor screen
 const assets: Assets = [
   {
     name: "room",
