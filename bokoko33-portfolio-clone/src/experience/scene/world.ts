@@ -7,62 +7,63 @@ import Floor from "./floor";
 import { Themes } from "../../types";
 
 export default class World {
-  public experience: Experience;
-  public sizes: Experience["sizes"];
-  public scene: Experience["scene"];
-  public canvas: Experience["canvas"];
-  public camera: Experience["camera"];
-  public resources: Experience["resources"];
-  public theme: Experience["theme"];
-  public environment!: Environment;
-  public room!: Room;
-  public controls!: Controls;
-  public floor!: Floor;
+	public experience: Experience;
+	public sizes: Experience["sizes"];
+	public scene: Experience["scene"];
+	public canvas: Experience["canvas"];
+	public camera: Experience["camera"];
+	public resources: Experience["resources"];
+	public theme: Experience["theme"];
+	public environment!: Environment;
+	public room!: Room;
+	public controls!: Controls;
+	public floor!: Floor;
 
-  constructor() {
-    this.experience = new Experience();
-    this.sizes = this.experience.sizes;
-    this.scene = this.experience.scene;
-    this.canvas = this.experience.canvas;
-    this.camera = this.experience.camera;
-    this.resources = this.experience.resources;
-    this.theme = this.experience.theme;
+	constructor() {
+		this.experience = new Experience();
+		this.sizes = this.experience.sizes;
+		this.scene = this.experience.scene;
+		this.canvas = this.experience.canvas;
+		this.camera = this.experience.camera;
+		this.resources = this.experience.resources;
+		this.theme = this.experience.theme;
 
-    this.resources.on("ready", () => {
-      this.environment = new Environment();
-      this.room = new Room();
-      this.floor = new Floor();
-      this.controls = new Controls();
-    });
+		this.resources.on("ready", () => {
+			this.environment = new Environment();
+			this.floor = new Floor();
+			this.room = new Room();
+			this.controls = new Controls();
+		});
 
-    this.theme.on("switch", (theme: Themes) => {
-      this.switchTheme(theme);
-    });
-  }
+		this.theme.on("switch", (theme: Themes) => {
+			this.switchTheme(theme);
+		});
+	}
 
-  switchTheme(theme: Themes) {
-    if (this.environment) {
-      this.environment.switchTheme(theme);
-    }
+	switchTheme(theme: Themes) {
+		if (this.environment) {
+			this.environment.switchTheme(theme);
+		}
 
-    if (this.room) {
-      this.room.setModelLight(theme);
-    }
+		if (this.room) {
+			this.room.setModelLight(theme);
+		}
 
-    if (this.controls) {
-      this.controls.setRoomLight(theme);
-    }
-  }
+		// TODO: Check this room light
+		// if (this.controls) {
+		//   this.controls.setRoomLight(theme);
+		// }
+	}
 
-  resize() {}
+	resize() {}
 
-  update() {
-    if (this.room) {
-      this.room.update();
-    }
+	update() {
+		if (this.room) {
+			this.room.update();
+		}
 
-    if (this.controls) {
-      this.controls.update();
-    }
-  }
+		if (this.controls) {
+			this.controls.update();
+		}
+	}
 }
