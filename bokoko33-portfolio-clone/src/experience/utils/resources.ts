@@ -20,6 +20,7 @@ export default class Resources extends EventEmitter {
 
 	constructor(assets: Asset[]) {
 		super();
+
 		this.experience = new Experience();
 		this.assets = assets;
 		this.items = {};

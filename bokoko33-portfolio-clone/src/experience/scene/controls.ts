@@ -42,7 +42,7 @@ export default class Controls {
 		this.time = this.experience.time;
 		this.camera = this.experience.camera;
 		this.room = this.experience.world.room.roomScene;
-		this.room.children.forEach((child) => {
+		this.room.children.forEach((child: THREE.PointLight) => {
 			if (child.type === "PointLight") {
 				this.pointLight = child as THREE.PointLight;
 			}
@@ -368,67 +368,73 @@ export default class Controls {
 					},
 				});
 
-				this.room.children.forEach((child) => {
-					if (child.name === "MiniFloor") {
-						// !! Original x: -5.846341133117676, y: -0.5232429504394531, z: 11.979839324951172
+				this.room.children.forEach(
+					(child: {
+						name: string;
+						position: gsap.TweenTarget;
+						scale: gsap.TweenTarget;
+					}) => {
+						if (child.name === "MiniFloor") {
+							// !! Original x: -5.846341133117676, y: -0.5232429504394531, z: 11.979839324951172
 
-						this.first = GSAP.to(child.position, {
-							x: -5.846341133117676,
-							z: 11.979839324951172,
-							duration: 0.3,
-						});
-					}
+							this.first = GSAP.to(child.position, {
+								x: -5.846341133117676,
+								z: 11.979839324951172,
+								duration: 0.3,
+							});
+						}
 
-					if (child.name === "MailBox") {
-						this.second = GSAP.to(child.scale, {
-							x: 1,
-							y: 1,
-							z: 1,
-							ease: "back.out(2)",
-							duration: 0.3,
-						});
-					}
+						if (child.name === "MailBox") {
+							this.second = GSAP.to(child.scale, {
+								x: 1,
+								y: 1,
+								z: 1,
+								ease: "back.out(2)",
+								duration: 0.3,
+							});
+						}
 
-					if (child.name === "Lamp") {
-						this.third = GSAP.to(child.scale, {
-							x: 1,
-							y: 1,
-							z: 1,
-							ease: "back.out(2)",
-							duration: 0.3,
-						});
-					}
+						if (child.name === "Lamp") {
+							this.third = GSAP.to(child.scale, {
+								x: 1,
+								y: 1,
+								z: 1,
+								ease: "back.out(2)",
+								duration: 0.3,
+							});
+						}
 
-					if (child.name === "FloorFirst") {
-						this.fourth = GSAP.to(child.scale, {
-							x: 1,
-							y: 1,
-							z: 1,
-							ease: "back.out(2)",
-							duration: 0.3,
-						});
-					}
+						if (child.name === "FloorFirst") {
+							this.fourth = GSAP.to(child.scale, {
+								x: 1,
+								y: 1,
+								z: 1,
+								ease: "back.out(2)",
+								duration: 0.3,
+							});
+						}
 
-					if (child.name === "FloorSecond") {
-						this.fifth = GSAP.to(child.scale, {
-							x: 1,
-							y: 1,
-							z: 1,
-							ease: "back.out(2)",
-							duration: 0.3,
-						});
-					}
+						if (child.name === "FloorSecond") {
+							this.fifth = GSAP.to(child.scale, {
+								x: 1,
+								y: 1,
+								z: 1,
+								ease: "back.out(2)",
+								duration: 0.3,
+							});
+						}
 
-					if (child.name === "FloorThird") {
-						this.sixth = GSAP.to(child.scale, {
-							x: 1,
-							y: 1,
-							z: 1,
-							ease: "back.out(2)",
-							duration: 0.3,
-						});
+						if (child.name === "FloorThird") {
+							this.sixth = GSAP.to(child.scale, {
+								x: 1,
+								y: 1,
+								z: 1,
+								ease: "back.out(2)",
+								duration: 0.3,
+							});
+						}
 					}
-				});
+				);
 				this.secondPartTimeline.add(this.first);
 				this.secondPartTimeline.add(this.second);
 				this.secondPartTimeline.add(this.third, "-=0.05");

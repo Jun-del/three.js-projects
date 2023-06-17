@@ -9,7 +9,7 @@ export default class Room {
 	public scene: Experience["scene"];
 	public resources: Experience["resources"];
 	public room: AssetItem;
-	public roomScene: THREE.Object3D;
+	public roomScene: any;
 	public lerp: {
 		current: number;
 		target: number;
@@ -19,13 +19,17 @@ export default class Room {
 	public pointLight!: THREE.PointLight;
 	public sphereSize!: number;
 	public pointLightHelper!: THREE.PointLightHelper;
+	public roomChildren!: {
+		[key: string]: THREE.Object3D;
+	};
 
 	constructor() {
 		this.experience = new Experience();
 		this.scene = this.experience.scene;
 		this.resources = this.experience.resources;
 		this.room = this.resources.items.room;
-		this.roomScene = this.room.scene as THREE.Object3D;
+		this.roomScene = this.room.scene;
+		this.roomChildren = {};
 
 		this.lerp = {
 			current: 0,
@@ -38,7 +42,7 @@ export default class Room {
 	}
 
 	setModel() {
-		this.roomScene.children.forEach((child) => {
+		this.roomScene.children.forEach((child: THREE.Object3D<THREE.Event>) => {
 			child.castShadow = true;
 			child.receiveShadow = true;
 
@@ -79,20 +83,32 @@ export default class Room {
 				child.position.z = 8.33244;
 			}
 
-			if (
-				child.name === "MailBox" ||
-				child.name === "Lamp" ||
-				child.name === "FloorFirst" ||
-				child.name === "FloorSecond" ||
-				child.name === "FloorThird"
-			) {
-				child.scale.set(0, 0, 0);
+			// if (
+			// 	child.name === "MailBox" ||
+			// 	child.name === "Lamp" ||
+			// 	child.name === "FloorFirst" ||
+			// 	child.name === "FloorSecond" ||
+			// 	child.name === "FloorThird"
+			// ) {
+			// 	child.scale.set(0, 0, 0);
+			// }
+
+			child.scale.set(0, 0, 0);
+
+			if (child.name === "Cube") {
+				// child.scale.set(1, 1, 1);
+				child.position.set(0, -1, 0);
+				child.rotation.y = Math.PI / 4;
 			}
+
+			this.roomChildren[child.name.toLowerCase()] = child;
 		});
 
 		this.pointLight = new THREE.PointLight(0xffffff, 0, 0.5);
 		this.pointLight.position.set(0.2, 10, -12.5);
 		this.roomScene.add(this.pointLight);
+
+		this.roomChildren["pointlight"] = this.pointLight;
 
 		this.scene.add(this.roomScene);
 		this.roomScene.scale.set(0.1, 0.1, 0.1);

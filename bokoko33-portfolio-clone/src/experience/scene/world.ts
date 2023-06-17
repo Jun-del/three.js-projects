@@ -1,3 +1,5 @@
+import { EventEmitter } from "events";
+
 import Experience from "../experience";
 import Room from "./room";
 import Environment from "./environment";
@@ -6,7 +8,7 @@ import Floor from "./floor";
 
 import { Themes } from "../../types";
 
-export default class World {
+export default class World extends EventEmitter {
 	public experience: Experience;
 	public sizes: Experience["sizes"];
 	public scene: Experience["scene"];
@@ -20,6 +22,8 @@ export default class World {
 	public floor!: Floor;
 
 	constructor() {
+		super();
+
 		this.experience = new Experience();
 		this.sizes = this.experience.sizes;
 		this.scene = this.experience.scene;
@@ -32,6 +36,9 @@ export default class World {
 			this.environment = new Environment();
 			this.floor = new Floor();
 			this.room = new Room();
+
+			this.emit("worldready");
+
 			this.controls = new Controls();
 		});
 
