@@ -1,4 +1,8 @@
 import "./style.css";
 import Experience from "./experience/experience";
 
-const experience = new Experience(document.querySelector(".experience-canvas"));
+const canvas = document.querySelector(
+	".experience-canvas"
+) as HTMLCanvasElement;
+
+const experience = new Experience(canvas);

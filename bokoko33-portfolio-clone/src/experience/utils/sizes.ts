@@ -1,28 +1,42 @@
 import { EventEmitter } from "events";
 
 export default class Sizes extends EventEmitter {
-  public width: number;
-  public height: number;
-  public aspectRatio: number;
-  public pixelRatio: number;
+	public frustum: number;
+	public width: number;
+	public height: number;
+	public aspectRatio: number;
+	public pixelRatio: number;
+	public device: string;
 
-  constructor() {
-    super();
+	constructor() {
+		super();
 
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+		this.frustum = 5;
 
-    this.aspectRatio = this.width / this.height;
-    this.pixelRatio = Math.min(window.devicePixelRatio, 2);
+		this.width = window.innerWidth;
+		this.height = window.innerHeight;
 
-    window.addEventListener("resize", () => {
-      this.width = window.innerWidth;
-      this.height = window.innerHeight;
+		this.aspectRatio = this.width / this.height;
+		this.pixelRatio = Math.min(window.devicePixelRatio, 2);
 
-      this.aspectRatio = this.width / this.height;
-      this.pixelRatio = Math.min(window.devicePixelRatio, 2);
+		this.width < 968 ? (this.device = "mobile") : (this.device = "desktop");
 
-      this.emit("resize");
-    });
-  }
+		window.addEventListener("resize", () => {
+			this.width = window.innerWidth;
+			this.height = window.innerHeight;
+
+			this.aspectRatio = this.width / this.height;
+			this.pixelRatio = Math.min(window.devicePixelRatio, 2);
+
+			this.emit("resize");
+
+			if (this.width < 968 && this.device !== "mobile") {
+				this.device = "mobile";
+				this.emit("switchdevice", this.device);
+			} else if (this.width >= 968 && this.device !== "desktop") {
+				this.device = "desktop";
+				this.emit("switchdevice", this.device);
+			}
+		});
+	}
 }
