@@ -7,15 +7,14 @@ import Resources from "./utils/resources";
 
 import Camera from "./camera";
 import Renderer from "./renderer";
-import World from "./scene/world";
-import Theme from "./theme";
 import Preloader from "./preloader";
+import Theme from "./theme";
 
+import World from "./scene/world";
+import Controls from "./scene/controls";
 export default class Experience {
-	// private static _instance: Experience;
 	public static _instance: Experience;
 
-	// TODO: optional
 	public sizes!: Sizes;
 	public scene!: THREE.Scene;
 	public camera!: Camera;
@@ -25,6 +24,7 @@ export default class Experience {
 	public world!: World;
 	public resources!: Resources;
 	public preloader!: Preloader;
+	public controls!: Controls;
 
 	constructor(public canvas?: HTMLCanvasElement) {
 		if (Experience._instance) {
@@ -47,6 +47,10 @@ export default class Experience {
 		this.world = new World();
 		this.preloader = new Preloader();
 
+		this.preloader.on("enablecontrols", () => {
+			this.controls = new Controls();
+		});
+
 		this.time.on("update", () => {
 			this.update();
 		});
@@ -66,6 +70,7 @@ export default class Experience {
 		this.camera.update();
 		this.renderer.update();
 		this.world.update();
+		this.preloader.update();
 	}
 }
 

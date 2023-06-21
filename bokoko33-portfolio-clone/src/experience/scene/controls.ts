@@ -59,6 +59,11 @@ export default class Controls {
 
 		GSAP.registerPlugin(ScrollTrigger);
 
+		const pageElement = document.querySelector(".page") as HTMLElement;
+		if (pageElement) {
+			pageElement.style.overflow = "visible";
+		}
+
 		this.setSmoothScroll();
 		this.setScrollTrigger();
 	}

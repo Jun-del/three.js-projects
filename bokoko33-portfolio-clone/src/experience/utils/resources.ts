@@ -61,11 +61,10 @@ export default class Resources extends EventEmitter {
 					this.video[asset.name]
 				);
 				// TODO: Check flipY
-				this.videoTexture[asset.name].flipY = true;
+				// this.videoTexture[asset.name].flipY = true;
 				this.videoTexture[asset.name].minFilter = THREE.NearestFilter;
 				this.videoTexture[asset.name].magFilter = THREE.NearestFilter;
 				this.videoTexture[asset.name].generateMipmaps = false;
-				// TODO: Check srgb encoding
 
 				this.singleAssetLoaded(asset, this.videoTexture[asset.name]);
 			}

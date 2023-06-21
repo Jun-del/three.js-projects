@@ -11,9 +11,9 @@ body {
 	font-family: "Montserrat", sans-serif;
 }
 
-body {
+/* body {
 	overflow: hidden;
-}
+} */
 
 h1,
 section,
@@ -73,6 +73,21 @@ svg {
 
 .page-wrapper {
 	position: relative;
+}
+
+/* Preloader */
+.animatedis {
+	display: inline-block;
+	transform: translateY(100%);
+}
+
+.intro-text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-weight: 500;
+	font-size: 16px;
+	transform: translate(-50%, -50%);
 }
 
 /* Toggle Bar Light-Dark Mode */
