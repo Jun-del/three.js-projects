@@ -53,9 +53,9 @@ export default class World extends EventEmitter {
 		}
 
 		// TODO: Lights after preloader
-		// if (this.room) {
-		// 	this.room.setModelLight(theme);
-		// }
+		if (this.room) {
+			this.room.setModelLight(theme);
+		}
 
 		// TODO: Check this room light
 		// if (this.controls) {

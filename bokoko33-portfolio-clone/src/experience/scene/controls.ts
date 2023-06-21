@@ -124,7 +124,7 @@ export default class Controls {
 				// * First Section
 				this.room.scale.set(0.1, 0.1, 0.1);
 
-				this.firstMoveTimeline = GSAP.timeline({
+				this.firstMoveTimeline = new GSAP.timeline({
 					scrollTrigger: {
 						trigger: ".first-move",
 						start: "top top",
@@ -140,7 +140,7 @@ export default class Controls {
 				});
 
 				// * Second Section
-				this.secondMoveTimeline = GSAP.timeline({
+				this.secondMoveTimeline = new GSAP.timeline({
 					scrollTrigger: {
 						trigger: ".second-move",
 						start: "top top",
@@ -174,7 +174,7 @@ export default class Controls {
 					);
 
 				// * Third Section (Camera)
-				this.thirdMoveTimeline = GSAP.timeline({
+				this.thirdMoveTimeline = new GSAP.timeline({
 					scrollTrigger: {
 						trigger: ".third-move",
 						start: "top top",
@@ -196,7 +196,7 @@ export default class Controls {
 				this.room.position.set(0, 0, 0);
 
 				// * First Section
-				this.firstMoveTimeline = GSAP.timeline({
+				this.firstMoveTimeline = new GSAP.timeline({
 					scrollTrigger: {
 						trigger: ".first-move",
 						start: "top top",
@@ -211,7 +211,7 @@ export default class Controls {
 				});
 
 				// * Second Section
-				this.secondMoveTimeline = GSAP.timeline({
+				this.secondMoveTimeline = new GSAP.timeline({
 					scrollTrigger: {
 						trigger: ".second-move",
 						start: "top top",
@@ -239,7 +239,7 @@ export default class Controls {
 					);
 
 				// * Third Section
-				this.thirdMoveTimeline = GSAP.timeline({
+				this.thirdMoveTimeline = new GSAP.timeline({
 					scrollTrigger: {
 						trigger: ".third-move",
 						start: "top top",
@@ -314,7 +314,7 @@ export default class Controls {
 				});
 
 				// * Circles and model scale animations
-				this.firstMoveTimeline = GSAP.timeline({
+				this.firstMoveTimeline = new GSAP.timeline({
 					scrollTrigger: {
 						trigger: ".first-move",
 						start: "top top",
@@ -327,7 +327,7 @@ export default class Controls {
 					z: 3,
 				});
 
-				this.secondMoveTimeline = GSAP.timeline({
+				this.secondMoveTimeline = new GSAP.timeline({
 					scrollTrigger: {
 						trigger: ".second-move",
 						start: "top top",
@@ -352,7 +352,7 @@ export default class Controls {
 						"same"
 					);
 
-				this.thirdMoveTimeline = GSAP.timeline({
+				this.thirdMoveTimeline = new GSAP.timeline({
 					scrollTrigger: {
 						trigger: ".third-move",
 						start: "top top",
@@ -366,7 +366,7 @@ export default class Controls {
 				});
 
 				// * Platform animations
-				this.secondPartTimeline = GSAP.timeline({
+				this.secondPartTimeline = new GSAP.timeline({
 					scrollTrigger: {
 						trigger: ".third-move",
 						start: "top top",

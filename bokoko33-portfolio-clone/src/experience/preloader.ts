@@ -13,6 +13,7 @@ export default class Preloader extends EventEmitter {
 	public world: Experience["world"];
 	public room: Experience["world"]["room"]["roomScene"];
 	public roomChildren!: Experience["world"]["room"]["roomChildren"];
+	// public timeline!: GSAPTimeline;
 	public timeline!: GSAPTimeline;
 	public secondTimeline!: GSAPTimeline;
 	public device: Experience["sizes"]["device"];
@@ -56,7 +57,18 @@ export default class Preloader extends EventEmitter {
 
 	firstIntro() {
 		return new Promise((resolve) => {
-			this.timeline = GSAP.timeline();
+			this.timeline = new GSAP.timeline();
+			this.timeline.set(".animatedis", { y: 0, yPercent: 100 });
+
+			this.timeline.to(".preloader", {
+				opacity: 0,
+				delay: 1,
+				onComplete: () => {
+					// document.querySelector(".preloader")!.remove();
+					document.querySelector(".preloader")!.classList.add("hidden");
+				},
+			});
+
 			if (this.device === "desktop") {
 				this.timeline
 					.to(this.roomChildren.cube.scale, {
@@ -70,7 +82,6 @@ export default class Preloader extends EventEmitter {
 						x: -1,
 						ease: "power1.out",
 						duration: 0.7,
-						onComplete: resolve,
 					});
 			} else {
 				this.timeline
@@ -85,18 +96,55 @@ export default class Preloader extends EventEmitter {
 						z: -1,
 						ease: "power1.out",
 						duration: 0.7,
-						onComplete: resolve,
 					});
 			}
+
+			this.timeline
+				.to(".intro-text .animatedis", {
+					yPercent: 0,
+					stagger: 0.05,
+					ease: "back.out(1.7)",
+				})
+				.to(
+					".arrow-svg-wrapper",
+					{
+						opacity: 1,
+					},
+					"same"
+				)
+				.to(
+					".toggle-bar",
+					{
+						opacity: 1,
+						onComplete: resolve,
+					},
+					"same"
+				);
 		});
 	}
 
 	secondIntro() {
 		return new Promise((resolve) => {
-			this.secondTimeline = GSAP.timeline();
+			this.secondTimeline = new GSAP.timeline();
 
 			// if (this.device === "desktop") {
 			this.secondTimeline
+				.to(
+					".intro-text .animatedis",
+					{
+						yPercent: 0,
+						stagger: 0.05,
+						ease: "back.in(1.7)",
+					},
+					"fadeout"
+				)
+				.to(
+					".arrow-svg-wrapper",
+					{
+						opacity: 0,
+					},
+					"fadeout"
+				)
 				.to(
 					this.room.position,
 					{
@@ -140,11 +188,51 @@ export default class Preloader extends EventEmitter {
 					y: 1,
 					z: 1,
 				})
-				.to(this.roomChildren.cube.scale, {
-					x: 0,
-					y: 0,
-					z: 0,
-				})
+				.to(
+					this.roomChildren.cube.scale,
+					{
+						x: 0,
+						y: 0,
+						z: 0,
+					},
+					"introtext"
+				)
+				.to(
+					".hero-main-title .animatedis",
+					{
+						yPercent: 0,
+						stagger: 0.07,
+						ease: "back.out(1.7)",
+					},
+					"introtext"
+				)
+				.to(
+					".hero-main-description .animatedis",
+					{
+						yPercent: 0,
+						stagger: 0.07,
+						ease: "back.out(1.7)",
+					},
+					"introtext"
+				)
+				.to(
+					".first-sub .animatedis",
+					{
+						yPercent: 0,
+						stagger: 0.07,
+						ease: "back.out(1.7)",
+					},
+					"introtext"
+				)
+				.to(
+					".second-sub .animatedis",
+					{
+						yPercent: 0,
+						stagger: 0.07,
+						ease: "back.out(1.7)",
+					},
+					"introtext"
+				)
 				// Grouped animations
 				.to(this.roomChildren.furnitures.scale, {
 					x: 1,
@@ -221,9 +309,16 @@ export default class Preloader extends EventEmitter {
 						y: 4 * Math.PI + Math.PI * 4,
 						ease: "power2.out",
 						duration: 1,
-						// onComplete: resolve,
 					},
 					"chair"
+				)
+				.to(
+					".arrow-svg-wrapper",
+					{
+						opacity: 1,
+						onComplete: resolve,
+					},
+					"same"
 				);
 			// }
 			// else {
@@ -296,6 +391,9 @@ export default class Preloader extends EventEmitter {
 	}
 
 	scale() {
+		const pointlight = this.roomChildren.pointlight as THREE.PointLight;
+		pointlight.intensity = 0;
+
 		if (this.device === "desktop") {
 			this.room.scale.set(0.11, 0.11, 0.11);
 		} else {
