@@ -13,7 +13,6 @@ export default class Preloader extends EventEmitter {
 	public world: Experience["world"];
 	public room: Experience["world"]["room"]["roomScene"];
 	public roomChildren!: Experience["world"]["room"]["roomChildren"];
-	// public timeline!: GSAPTimeline;
 	public timeline!: GSAPTimeline;
 	public secondTimeline!: GSAPTimeline;
 	public device: Experience["sizes"]["device"];
@@ -51,13 +50,14 @@ export default class Preloader extends EventEmitter {
 		ConvertDivToSpan(document.querySelector(".hero-main-description")!);
 		ConvertDivToSpan(document.querySelector(".hero-second-subheading")!);
 		ConvertDivToSpan(document.querySelector(".second-sub")!);
+
 		this.room = this.experience.world.room.roomScene;
 		this.roomChildren = this.experience.world.room.roomChildren;
 	}
 
 	firstIntro() {
 		return new Promise((resolve) => {
-			this.timeline = new GSAP.timeline();
+			this.timeline = GSAP.timeline();
 			this.timeline.set(".animatedis", { y: 0, yPercent: 100 });
 
 			this.timeline.to(".preloader", {
@@ -125,14 +125,14 @@ export default class Preloader extends EventEmitter {
 
 	secondIntro() {
 		return new Promise((resolve) => {
-			this.secondTimeline = new GSAP.timeline();
+			this.secondTimeline = GSAP.timeline();
 
 			// if (this.device === "desktop") {
 			this.secondTimeline
 				.to(
 					".intro-text .animatedis",
 					{
-						yPercent: 0,
+						yPercent: 100,
 						stagger: 0.05,
 						ease: "back.in(1.7)",
 					},
@@ -194,6 +194,7 @@ export default class Preloader extends EventEmitter {
 						x: 0,
 						y: 0,
 						z: 0,
+						duration: 1,
 					},
 					"introtext"
 				)
@@ -234,41 +235,61 @@ export default class Preloader extends EventEmitter {
 					"introtext"
 				)
 				// Grouped animations
-				.to(this.roomChildren.furnitures.scale, {
-					x: 1,
-					y: 1,
-					z: 1,
-					ease: "back.out(2.2)",
-					duration: 0.5,
-				})
-				.to(this.roomChildren.clock.scale, {
-					x: 1,
-					y: 1,
-					z: 1,
-					ease: "back.out(2.2)",
-					duration: 0.5,
-				})
-				.to(this.roomChildren.shelves.scale, {
-					x: 1,
-					y: 1,
-					z: 1,
-					ease: "back.out(2.2)",
-					duration: 0.5,
-				})
-				.to(this.roomChildren.desk.scale, {
-					x: 1,
-					y: 1,
-					z: 1,
-					ease: "back.out(2.2)",
-					duration: 0.5,
-				})
-				.to(this.roomChildren.tableitems.scale, {
-					x: 1,
-					y: 1,
-					z: 1,
-					ease: "back.out(2.2)",
-					duration: 0.5,
-				})
+				.to(
+					this.roomChildren.furnitures.scale,
+					{
+						x: 1,
+						y: 1,
+						z: 1,
+						ease: "back.out(2.2)",
+						duration: 0.5,
+					},
+					">-0.45"
+				)
+				.to(
+					this.roomChildren.clock.scale,
+					{
+						x: 1,
+						y: 1,
+						z: 1,
+						ease: "back.out(2.2)",
+						duration: 0.5,
+					},
+					">-0.4"
+				)
+				.to(
+					this.roomChildren.shelves.scale,
+					{
+						x: 1,
+						y: 1,
+						z: 1,
+						ease: "back.out(2.2)",
+						duration: 0.5,
+					},
+					">-0.3"
+				)
+				.to(
+					this.roomChildren.desk.scale,
+					{
+						x: 1,
+						y: 1,
+						z: 1,
+						ease: "back.out(2.2)",
+						duration: 0.5,
+					},
+					">-0.1"
+				)
+				.to(
+					this.roomChildren.tableitems.scale,
+					{
+						x: 1,
+						y: 1,
+						z: 1,
+						ease: "back.out(2.2)",
+						duration: 0.5,
+					},
+					">-0.15"
+				)
 				.to(this.roomChildren.monitor.scale, {
 					x: 1,
 					y: 1,
@@ -317,8 +338,8 @@ export default class Preloader extends EventEmitter {
 					{
 						opacity: 1,
 						onComplete: resolve,
-					},
-					"same"
+					}
+					// "same"
 				);
 			// }
 			// else {
@@ -336,7 +357,6 @@ export default class Preloader extends EventEmitter {
 	onScroll(event: WheelEvent) {
 		if (event.deltaY > 0) {
 			this.removeEventListeners();
-
 			this.playSecondIntro();
 		}
 	}
@@ -364,6 +384,7 @@ export default class Preloader extends EventEmitter {
 	}
 
 	async playIntro() {
+		this.scaleFlag = true;
 		await this.firstIntro();
 		this.moveFlag = true;
 		this.scrollOnceEvent = this.onScroll.bind(this);
@@ -376,7 +397,6 @@ export default class Preloader extends EventEmitter {
 
 	async playSecondIntro() {
 		this.moveFlag = false;
-		this.scaleFlag = true;
 		await this.secondIntro();
 		this.scaleFlag = false;
 		this.emit("enablecontrols");

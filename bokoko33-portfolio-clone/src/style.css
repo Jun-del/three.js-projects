@@ -11,9 +11,9 @@ body {
 	font-family: "Montserrat", sans-serif;
 }
 
-/* body {
-	overflow: hidden;
-} */
+.credits {
+	display: none;
+}
 
 h1,
 section,
@@ -183,7 +183,7 @@ svg {
 	align-items: center;
 	top: 48px;
 	right: 48px;
-	z-index: 9999999;
+	z-index: 99999999999999;
 }
 
 .sun-wrapper,
@@ -225,7 +225,7 @@ svg {
 }
 
 .slide {
-	left: 28px;
+	left: 31px;
 }
 
 /* Section Format */
@@ -288,6 +288,10 @@ svg {
 	padding: 20% 5%;
 	border-bottom: 2px solid var(--color-purple);
 	padding-bottom: 400px;
+}
+
+.section-intro-wrapper:nth-child(3) {
+	border-bottom: 2px solid var(--color-green);
 }
 
 .section-detail-wrapper {
@@ -370,15 +374,16 @@ svg {
 
 .hero-wrapper {
 	position: relative;
-	width: calc(100% - 100px);
-	max-width: 1100px;
 	height: 100%;
+	width: 100%;
+	/* width: calc(100% - 100px); */
+	max-width: 1100px;
 	margin: 0 auto;
 }
 
 .hero-main {
 	position: absolute;
-	bottom: 170px;
+	bottom: 168px;
 	left: 0;
 	color: var(--color-text);
 }

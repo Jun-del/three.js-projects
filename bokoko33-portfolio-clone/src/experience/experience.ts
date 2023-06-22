@@ -51,26 +51,29 @@ export default class Experience {
 			this.controls = new Controls();
 		});
 
-		this.time.on("update", () => {
-			this.update();
-		});
-
 		this.sizes.on("resize", () => {
 			this.resize();
+		});
+
+		this.time.on("update", () => {
+			this.update();
 		});
 	}
 
 	resize() {
 		this.camera.resize();
-		this.renderer.resize();
 		this.world.resize();
+		this.renderer.resize();
 	}
 
 	update() {
-		this.camera.update();
-		this.renderer.update();
-		this.world.update();
 		this.preloader.update();
+		this.camera.update();
+		this.world.update();
+		this.renderer.update();
+		if (this.controls) {
+			this.controls.update();
+		}
 	}
 }
 

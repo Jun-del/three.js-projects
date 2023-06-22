@@ -30,8 +30,6 @@ export default class Floor {
 		this.floor.rotation.x = Math.PI * 0.5;
 		this.floor.position.y = -0.5;
 
-		// TODO: Shadow not on floor
-
 		this.floor.receiveShadow = true;
 
 		this.scene.add(this.floor);
@@ -49,8 +47,10 @@ export default class Floor {
 		this.circleThird = new THREE.Mesh(geometry, materialThird);
 
 		this.circleFirst.position.y = -0.29;
+
 		this.circleSecond.position.x = 2;
 		this.circleSecond.position.y = -0.28;
+
 		this.circleThird.position.y = -0.27;
 
 		this.circleFirst.scale.set(0, 0, 0);

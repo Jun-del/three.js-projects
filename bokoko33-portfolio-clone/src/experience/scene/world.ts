@@ -38,8 +38,6 @@ export default class World extends EventEmitter {
 			this.room = new Room();
 
 			this.emit("worldready");
-
-			this.controls = new Controls();
 		});
 
 		this.theme.on("switch", (theme: Themes) => {

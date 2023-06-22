@@ -28,7 +28,8 @@ export default class Renderer {
 
 		this.renderer.useLegacyLights = false;
 		this.renderer.toneMapping = THREE.CineonToneMapping;
-		// TODO: ToneMappingExposure value
+
+		// *: ToneMappingExposure value
 		this.renderer.toneMappingExposure = 1.75;
 		this.renderer.shadowMap.enabled = true;
 		this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;

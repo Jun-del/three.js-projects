@@ -22,10 +22,13 @@ export default class Resources extends EventEmitter {
 		super();
 
 		this.experience = new Experience();
+
 		this.assets = assets;
+
 		this.items = {};
 		this.queue = this.assets.length;
 		this.loaded = 0;
+
 		this.setLoader();
 		this.startLoading();
 	}
@@ -41,7 +44,11 @@ export default class Resources extends EventEmitter {
 
 	startLoading(): void {
 		for (const asset of this.assets) {
-			if (asset.type === "glb" || asset.type === "gltf") {
+			if (
+				asset.type === "glb" ||
+				asset.type === "gltf" ||
+				asset.type === "glbModel"
+			) {
 				this.loaders.GLTFLoader.load(asset.path, (file: any) => {
 					this.singleAssetLoaded(asset, file);
 				});
@@ -60,11 +67,13 @@ export default class Resources extends EventEmitter {
 				this.videoTexture[asset.name] = new THREE.VideoTexture(
 					this.video[asset.name]
 				);
-				// TODO: Check flipY
-				// this.videoTexture[asset.name].flipY = true;
+
+				// !: Check flipY
+				// this.videoTexture[asset.name].flipY = false;
 				this.videoTexture[asset.name].minFilter = THREE.NearestFilter;
 				this.videoTexture[asset.name].magFilter = THREE.NearestFilter;
 				this.videoTexture[asset.name].generateMipmaps = false;
+				this.videoTexture[asset.name].colorSpace = THREE.SRGBColorSpace;
 
 				this.singleAssetLoaded(asset, this.videoTexture[asset.name]);
 			}

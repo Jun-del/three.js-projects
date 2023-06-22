@@ -14,7 +14,9 @@
 		"noEmit": true,
 
 		/* Linting */
-		"strict": true,
+		// * "build": "tsc && vite build", on package.json
+		// * "strict": true,
+		"strict": false,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true

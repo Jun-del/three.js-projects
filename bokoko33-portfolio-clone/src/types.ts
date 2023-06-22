@@ -1,6 +1,6 @@
 export interface Asset {
 	name: string;
-	type: "glb" | "gltf" | "videoTexture";
+	type: "glb" | "gltf" | "videoTexture" | "glbModel";
 	path: string;
 }
 
