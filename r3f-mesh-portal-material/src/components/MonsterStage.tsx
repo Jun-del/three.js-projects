@@ -1,18 +1,22 @@
+import { useRef } from "react";
 import * as THREE from "three";
 import {
   MeshPortalMaterial,
+  PortalMaterialType,
   RoundedBox,
   Text,
   useTexture,
 } from "@react-three/drei";
 import Lights from "./Lights";
+import { useFrame } from "@react-three/fiber";
+import { easing } from "maath";
 
 type MonsterStageProps = {
   children: React.ReactNode;
   texture: string;
   name: string;
   color: string;
-  active: string;
+  active: string | null;
   setActive: (name: string | null) => void;
 };
 
@@ -26,6 +30,20 @@ const MonsterStage = ({
   ...props
 }: MonsterStageProps) => {
   const map = useTexture(texture);
+  const portalMaterial = useRef<PortalMaterialType | null>(null);
+
+  useFrame((_state, delta) => {
+    const worldOpen = active === name;
+    if (portalMaterial.current) {
+      easing.damp(
+        portalMaterial.current,
+        "blend",
+        worldOpen ? 1 : 0,
+        0.2,
+        delta
+      );
+    }
+  });
 
   return (
     <group {...props}>
@@ -34,10 +52,14 @@ const MonsterStage = ({
         <meshBasicMaterial color={color} toneMapped={false} />
       </Text>
       <RoundedBox
+        name={name}
         args={[2, 3, 0.1]}
         onDoubleClick={() => setActive(active === name ? null : name)}
       >
-        <MeshPortalMaterial blend={active === name ? 1 : 0}>
+        <MeshPortalMaterial
+          ref={portalMaterial}
+          // blend={active === name ? 1 : 0}
+        >
           {/* <MeshPortalMaterial side={THREE.DoubleSide}> */}
 
           {children}
