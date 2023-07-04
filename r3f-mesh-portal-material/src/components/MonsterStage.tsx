@@ -18,6 +18,8 @@ type MonsterStageProps = {
   color: string;
   active: string | null;
   setActive: (name: string | null) => void;
+  hovered: null | string | boolean;
+  setHovered: (name: string | null) => void;
 };
 
 const MonsterStage = ({
@@ -27,6 +29,8 @@ const MonsterStage = ({
   color,
   active,
   setActive,
+  hovered,
+  setHovered,
   ...props
 }: MonsterStageProps) => {
   const map = useTexture(texture);
@@ -55,6 +59,8 @@ const MonsterStage = ({
         name={name}
         args={[2, 3, 0.1]}
         onDoubleClick={() => setActive(active === name ? null : name)}
+        onPointerEnter={() => setHovered(name)}
+        onPointerLeave={() => setHovered(null)}
       >
         <MeshPortalMaterial
           ref={portalMaterial}

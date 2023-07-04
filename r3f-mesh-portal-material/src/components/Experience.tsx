@@ -1,6 +1,8 @@
+// @ts-nocheck
+
 import { useState, useRef, useEffect } from "react";
 import * as THREE from "three";
-import { CameraControls } from "@react-three/drei";
+import { CameraControls, useCursor } from "@react-three/drei";
 import Lights from "./Lights";
 import { Fish } from "./Fish";
 import { Dragon } from "./Dragon";
@@ -10,8 +12,11 @@ import { useThree } from "@react-three/fiber";
 
 export default function Experience() {
   const [active, isActive] = useState<null | string>(null);
-  const controlsRef = useRef<CameraControls>(null);
+  const [hovered, setHovered] = useState<null | string | boolean>(null); // Water, Fire, Grass
 
+  useCursor(!!hovered);
+
+  const controlsRef = useRef<CameraControls>(null);
   const scene = useThree((state) => state.scene);
 
   useEffect(() => {
@@ -52,8 +57,10 @@ export default function Experience() {
         color={"#006994"}
         active={active}
         setActive={isActive}
+        hovered={hovered}
+        setHovered={setHovered}
       >
-        <Fish scale={0.6} position-y={-1} />
+        <Fish scale={0.6} position-y={-1} hovered={hovered === "Water"} />
       </MonsterStage>
 
       <MonsterStage
@@ -62,11 +69,13 @@ export default function Experience() {
         color={"#EE4B2B"}
         active={active}
         setActive={isActive}
+        hovered={hovered}
+        setHovered={setHovered}
         position-x={-2.5}
         position-z={0.5}
         rotation-y={Math.PI / 8}
       >
-        <Dragon scale={0.6} position-y={-1} />
+        <Dragon scale={0.6} position-y={-1} hovered={hovered === "Fire"} />
       </MonsterStage>
 
       <MonsterStage
@@ -75,11 +84,13 @@ export default function Experience() {
         color={"#7CFC00"}
         active={active}
         setActive={isActive}
+        hovered={hovered}
+        setHovered={setHovered}
         position-x={2.5}
         position-z={0.5}
         rotation-y={-Math.PI / 8}
       >
-        <Cactoro scale={0.6} position-y={-1} />
+        <Cactoro scale={0.6} hovered={hovered === "Grass"} position-y={-1} />
       </MonsterStage>
     </>
   );
